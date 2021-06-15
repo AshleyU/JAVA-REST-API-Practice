@@ -3,6 +3,8 @@ package com.example.restfulapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +35,9 @@ public class StudentService {
         } else {
             throw new IllegalStateException("Student not found");
         }
+    }
+    @Transactional
+    public void updateStudent(Long studentId, String name, String email, LocalDate dob) {
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Student not found"));
     }
 }
