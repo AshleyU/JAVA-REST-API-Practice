@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -38,6 +39,9 @@ public class StudentService {
     }
     @Transactional
     public void updateStudent(Long studentId, String name, String email, LocalDate dob) {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Student not found"));
+        Student studentToUpdate = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Student not found"));
+        if(name != null && name.length() > 0 && !Objects.equals(studentToUpdate.getName(), name)) {
+            studentToUpdate.setName(name);
+        }
     }
 }
